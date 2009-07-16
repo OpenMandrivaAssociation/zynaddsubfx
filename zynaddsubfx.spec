@@ -4,15 +4,15 @@
 %define oname	ZynAddSubFX
 
 Name:		zynaddsubfx
-Version:	2.2.1
-Release:	%{mkrel 7}
+Version:	2.4.0
+Release:	%mkrel 1
 Summary:	Real-time MIDI software synthesizer
 Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
 Source1:	http://downloads.sourceforge.net/%{name}/%{oname}-doc-%{docver}.tar.gz
 Source3:	mandriva-controller.desktop
 Source4:	mandriva-spliter.desktop
 Source5:	mandriva-zynaddsubfx.desktop
-Patch:		ZynAddSubFX-2.2.0-makefile.patch
+Patch:		ZynAddSubFX-2.4.0-makefile.patch
 License:	GPLv2+
 Group:		Sound
 BuildRoot:	%{_tmppath}/%{name}-buildroot
@@ -35,10 +35,6 @@ analogue synthesizers.  The program has system/insertion effects, too.
 %setup -q -a 1 -n %{oname}-%{version}
 %patch -p1 -b .makefile
 
-# Fix up for fltk-config not existing any more - AdamW 2008/12
-sed -i -e 's,`fltk-config --ldflags`,-lfltk,g' ExternalPrograms/Spliter/compile.sh ExternalPrograms/Controller/compile.sh src/Makefile
-sed -i -e 's,`fltk-config --cflags`,,g' ExternalPrograms/Spliter/compile.sh ExternalPrograms/Controller/compile.sh src/Makefile
-
 # fix a header name - AdamW 2008/12
 sed -i -e 's,Fl_Box.h,Fl_Box.H,g' ExternalPrograms/Controller/ControllerUI.fl
 
@@ -49,10 +45,9 @@ mv %{oname}-doc-%{docver} html
 cd src
 make OPTFLAGS="%{optflags}"
 cd ../ExternalPrograms/Spliter
-export PATH=$PATH:.
-./compile.sh
+make
 cd ../Controller/
-./compile.sh
+make
 
 %install
 rm -rf %{buildroot}
@@ -62,7 +57,6 @@ install -m 755 ExternalPrograms/Spliter/spliter %{buildroot}/%{_bindir}
 install -m 755 ExternalPrograms/Controller/controller %{buildroot}/%{_bindir}
 install -m 644 %{SOURCE3} %{SOURCE4} %{SOURCE5} %{buildroot}/%{_datadir}/applications
 cp -a banks %{buildroot}/%{_datadir}/zynaddsubfx
-cp -a presets %{buildroot}/%{_datadir}/zynaddsubfx
 
 %if %mdkversion < 200900
 %post
