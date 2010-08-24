@@ -4,15 +4,15 @@
 %define oname	ZynAddSubFX
 
 Name:		zynaddsubfx
-Version:	2.4.0
-Release:	%mkrel 2
+Version:	2.4.1
+Release:	%mkrel 1
 Summary:	Real-time MIDI software synthesizer
 Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
 Source1:	http://downloads.sourceforge.net/%{name}/%{oname}-doc-%{docver}.tar.gz
 Source3:	mandriva-controller.desktop
 Source4:	mandriva-spliter.desktop
 Source5:	mandriva-zynaddsubfx.desktop
-Patch:		ZynAddSubFX-2.4.0-makefile.patch
+Patch0:		ZynAddSubFX-2.4.1-makefile.patch
 License:	GPLv2+
 Group:		Sound
 BuildRoot:	%{_tmppath}/%{name}-buildroot
@@ -33,7 +33,7 @@ analogue synthesizers.  The program has system/insertion effects, too.
 
 %prep
 %setup -q -a 1 -n %{oname}-%{version}
-%patch -p1 -b .makefile
+%patch0 -p0
 
 # fix a header name - AdamW 2008/12
 sed -i -e 's,Fl_Box.h,Fl_Box.H,g' ExternalPrograms/Controller/ControllerUI.fl
