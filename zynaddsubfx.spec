@@ -4,23 +4,19 @@
 %define oname	ZynAddSubFX
 
 Name:		zynaddsubfx
-Version:	2.4.1
-Release:	%mkrel 1
+Version:	2.4.2
+Release:	1
 Summary:	Real-time MIDI software synthesizer
 Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
 Source1:	http://downloads.sourceforge.net/%{name}/%{oname}-doc-%{docver}.tar.gz
-Source3:	mandriva-controller.desktop
-Source4:	mandriva-spliter.desktop
-Source5:	mandriva-zynaddsubfx.desktop
-Patch0:		ZynAddSubFX-2.4.1-makefile.patch
 License:	GPLv2+
 Group:		Sound
-BuildRoot:	%{_tmppath}/%{name}-buildroot
 URL:		http://sourceforge.net/projects/zynaddsubfx
 BuildRequires:	libalsa-devel
 BuildRequires:	fltk-devel
 BuildRequires:	fftw3-devel
-BuildRequires:	libjack-devel
+BuildRequires:	cmake
+BuildRequires:	pkgconfig(jack)
 BuildRequires:	mxml-devel
 Provides:	ZynAddSubFX = %{version}-%{release}
 Obsoletes:	ZynAddSubFX < %{version}-%{release}
@@ -33,7 +29,6 @@ analogue synthesizers.  The program has system/insertion effects, too.
 
 %prep
 %setup -q -a 1 -n %{oname}-%{version}
-%patch0 -p0
 
 # fix a header name - AdamW 2008/12
 sed -i -e 's,Fl_Box.h,Fl_Box.H,g' ExternalPrograms/Controller/ControllerUI.fl
@@ -42,41 +37,14 @@ chmod 644 *.txt
 mv %{oname}-doc-%{docver} html
 
 %build
-cd src
-make OPTFLAGS="%{optflags}"
-cd ../ExternalPrograms/Spliter
-make
-cd ../Controller/
-make
+%cmake
+%make
 
 %install
-rm -rf %{buildroot}
-mkdir -p %{buildroot}/%{_bindir} %{buildroot}/%{_datadir}/applications %{buildroot}/%{_datadir}/zynaddsubfx
-install -m 755 src/zynaddsubfx %{buildroot}/%{_bindir}
-install -m 755 ExternalPrograms/Spliter/spliter %{buildroot}/%{_bindir}
-install -m 755 ExternalPrograms/Controller/controller %{buildroot}/%{_bindir}
-install -m 644 %{SOURCE3} %{SOURCE4} %{SOURCE5} %{buildroot}/%{_datadir}/applications
-cp -a banks %{buildroot}/%{_datadir}/zynaddsubfx
-
-%if %mdkversion < 200900
-%post
-%update_menus
-%endif
-
-%if %mdkversion < 200900
-%postun
-%clean_menus
-%endif
-
-%clean
-rm -rf %{buildroot}
+cd build/
+%makeinstall_std
 
 %files
-%defattr(-,root,root)
 %doc examples html *.txt ZynAddSubFX.lsm 
 %doc  ExternalPrograms/Spliter/readme.txt
 %{_bindir}/zynaddsubfx
-%{_bindir}/spliter
-%{_bindir}/controller
-%{_datadir}/applications/*
-%{_datadir}/zynaddsubfx/*
