@@ -4,7 +4,7 @@
 %define oname	ZynAddSubFX
 
 Name:		zynaddsubfx
-Version:	2.4.2
+Version:	2.4.3
 Release:	1
 Summary:	Real-time MIDI software synthesizer
 Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
@@ -18,20 +18,26 @@ BuildRequires:	fftw3-devel
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	mxml-devel
-Provides:	ZynAddSubFX = %{version}-%{release}
-Obsoletes:	ZynAddSubFX < %{version}-%{release}
 
 %description
 A real-time software synthesizer for Linux with many features,
 including polyphony, multi-timbral and microtonal capabilities.  It
 includes randomness of some parameters,which makes warm sounds, like
-analogue synthesizers.  The program has system/insertion effects, too.
+analogue synthesizers. The program has system/insertion effects, too.
+
+%package dssi
+Summary:	DSSI synthesizer plugin
+Group:		Sound
+License:	GPLv2+
+Requires:	%{name} = %{version}-%{release}
+
+%description dssi
+This is the DSSI synthesizer plugin of zynaddsubfx, which can be used
+with DSSI hosts like qtractor, ghostess, rosegarden and others.
+
 
 %prep
 %setup -q -a 1 -n %{oname}-%{version}
-
-# fix a header name - AdamW 2008/12
-sed -i -e 's,Fl_Box.h,Fl_Box.H,g' ExternalPrograms/Controller/ControllerUI.fl
 
 chmod 644 *.txt
 mv %{oname}-doc-%{docver} html
@@ -45,6 +51,9 @@ cd build/
 %makeinstall_std
 
 %files
-%doc examples html *.txt ZynAddSubFX.lsm 
+%doc html *.txt ZynAddSubFX.lsm 
 %doc  ExternalPrograms/Spliter/readme.txt
 %{_bindir}/zynaddsubfx
+
+%files dssi
+%{_libdir}/dssi/libzynaddsubfx_dssi.so
