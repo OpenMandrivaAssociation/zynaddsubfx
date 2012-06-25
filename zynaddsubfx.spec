@@ -18,6 +18,7 @@ BuildRequires:	fftw3-devel
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	mxml-devel
+BuildRequires:	dssi-devel
 
 %description
 A real-time software synthesizer for Linux with many features,
