@@ -5,7 +5,7 @@
 
 Name:		zynaddsubfx
 Version:	2.4.3
-Release:	1
+Release:	2
 Summary:	Real-time MIDI software synthesizer
 Source0:	http://downloads.sourceforge.net/%{name}/%{oname}-%{version}.tar.bz2
 Source1:	http://downloads.sourceforge.net/%{name}/%{oname}-doc-%{docver}.tar.gz
