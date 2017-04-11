@@ -21,6 +21,7 @@ BuildRequires:	mxml-devel
 BuildRequires:	dssi-devel
 BuildRequires:	pkgconfig(cairo)
 BuildRequires:	pkgconfig(pixman-1)
+BuildRequires:	ladspa-devel
 
 %description
 A real-time software synthesizer for Linux with many features,
