@@ -61,8 +61,10 @@ chmod 644 *.txt
 %{_datadir}/%{name}/banks
 %{_libdir}/lv2/Zyn*
 %{_libdir}/vst/Zyn*
+%{_datadir}/bash-completion/completions/zynaddsubfx
 %{_datadir}/applications/*.desktop
 %{_datadir}/pixmaps/%{name}.svg
+%{_datadir}/pixmaps/zynaddsubfx.png
 
 %files dssi
 %{_libdir}/dssi/libzynaddsubfx_dssi.so
