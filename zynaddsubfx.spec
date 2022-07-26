@@ -55,7 +55,7 @@ chmod 644 *.txt
 %make_install -C build
 
 %files
-%doc AUTHORS.txt COPYING HISTORY.txt README.adoc
+%doc AUTHORS.txt COPYING README.adoc
 %{_bindir}/zynaddsubfx
 %{_datadir}/%{name}/examples/
 %{_datadir}/%{name}/banks
