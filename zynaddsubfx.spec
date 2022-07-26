@@ -4,10 +4,10 @@
 %define oname	ZynAddSubFX
 
 Name:		zynaddsubfx
-Version:	3.0.5
+Version:	3.0.6
 Release:	1
 Summary:	Real-time MIDI software synthesizer
-Source0:	https://netix.dl.sourceforge.net/project/zynaddsubfx/zynaddsubfx/3.0.5/%{name}-%{version}.tar.bz2
+Source0:	https://sourceforge.net/projects/zynaddsubfx/files/zynaddsubfx/%{version}/zynaddsubfx-%{version}.tar.bz2
 License:	GPLv2+
 Group:		Sound
 URL:		http://sourceforge.net/projects/zynaddsubfx
@@ -49,21 +49,22 @@ chmod 644 *.txt
 
 %build
 %cmake -DPluginLibDir=%{_libdir}
-%make
+%make_build
 
 %install
-cd build/
-%makeinstall_std
+%make_install -C build
 
 %files
-%doc AUTHORS.txt COPYING HISTORY.txt README.adoc
+%doc AUTHORS.txt COPYING README.adoc
 %{_bindir}/zynaddsubfx
 %{_datadir}/%{name}/examples/
 %{_datadir}/%{name}/banks
 %{_libdir}/lv2/Zyn*
 %{_libdir}/vst/Zyn*
+%{_datadir}/bash-completion/completions/zynaddsubfx
 %{_datadir}/applications/*.desktop
 %{_datadir}/pixmaps/%{name}.svg
+%{_datadir}/pixmaps/zynaddsubfx.png
 
 %files dssi
 %{_libdir}/dssi/libzynaddsubfx_dssi.so
