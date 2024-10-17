@@ -10,7 +10,7 @@ Summary:	Real-time MIDI software synthesizer
 Source0:	https://sourceforge.net/projects/zynaddsubfx/files/zynaddsubfx/%{version}/zynaddsubfx-%{version}.tar.bz2
 License:	GPLv2+
 Group:		Sound
-URL:		http://sourceforge.net/projects/zynaddsubfx
+URL:		https://sourceforge.net/projects/zynaddsubfx
 BuildRequires:	libalsa-devel
 BuildRequires:	fltk-devel
 BuildRequires:	fftw3-devel
